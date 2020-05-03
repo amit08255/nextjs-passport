@@ -11,7 +11,6 @@ var LocalStrategy = require('passport-local').Strategy;
  * @param {function} done 
  */
 const validateUserCredentials = (username, password, done) => {
-    console.log("\n\nvalidate: ", username, password);
     done(null, {
         token: "1234tokens"
     });
@@ -44,7 +43,7 @@ const startUserSession = (req, user) => {
 
     req.login(user, function (err) {
       if(err) {
-        console.log(err);
+        console.log("\n\nLogin error: ", err);
         return;
       }
     });
@@ -86,10 +85,6 @@ app.use((req, res) => {
     }
 
     passport.authenticate('local', onUserAuthentication(req, res))(req, res);
-
-    res.statusCode = 200;
-    res.setHeader('Content-Type', 'application/json');
-    res.status(200).json({ name: 'Next.js' });
   });
 
   export default app;
