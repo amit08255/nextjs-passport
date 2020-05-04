@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 
 const indexPage = () => {
 
@@ -9,13 +10,20 @@ const indexPage = () => {
 
 export const getServerSideProps = async function({ req, res }) {
 
-    const user = undefined;
-  
-    if (user === undefined) {
-      res.setHeader('location', '/login')
-      res.statusCode = 302
-      res.end()
-      return { props: {} }
+    // Fetch data from external API
+    const response = await axios.post(`http://localhost:3000/api/verify-session`, {}, {
+        headers: {
+            Cookie: req.headers.cookie || ""
+        }
+    });
+
+    const data = response.data;
+
+    if (data.status !== true) {
+      res.setHeader('location', '/login');
+      res.statusCode = 302;
+      res.end();
+      return { props: {} };
     }
   
     return {
