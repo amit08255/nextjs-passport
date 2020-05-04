@@ -1,43 +1,5 @@
-import connect from '../../route-middleware';
+import {initiateApp} from '../../api-utils';
 import passport from 'passport';
-import session from '../../cookie-session';
-var LocalStrategy = require('passport-local').Strategy;
-
-/**
- * When login is successful return session info
- * as second parameter of done function
- * 
- * @param {string} username 
- * @param {string} password 
- * @param {function} done 
- */
-const validateUserCredentials = (username, password, done) => {
-    done(null, {
-        token: "1234tokens"
-    });
-}
-
-/**
- * Serialize user info JSON object into JSON string
- * 
- * @param {JSON} user 
- * @param {function} done 
- */
-export const serializeSessionUser = (user, done) => {
-
-    done(null, JSON.stringify(user));
-}
-
-/**
- * De-serialize user info JSON string into object
- * 
- * @param {String} user
- * @param {function} done 
- */
-export const deserialiseSessionUser = (user, done) => {
-
-    done(null, JSON.parse(user));
-}
 
 
 const startUserSession = (req, res, user) => {
@@ -69,31 +31,7 @@ export const onUserAuthentication = (req, res) => (error, session, info) => {
     res.status(200).send(session);
 }
 
-
-// initialize express-session to allow us track the logged-in user across sessions.
-const expiryDate = new Date(Date.now() + 60 * 60 * 1000) // 1 hour
-
-
-const app = connect();
-
-app.use(session({
-  name: 'private-session-app', //cookie name
-  keys: ['private', 'session'], //used to sign and verify cookie
-  maxAge: 20 * 60 * 60 * 1000, // 20 hours
-  cookie: {
-    httpOnly: true,
-    expires: expiryDate
-  }
-}));
-
-app.use(passport.initialize());
-
-
-passport.use(new LocalStrategy(validateUserCredentials));
-
-passport.serializeUser(serializeSessionUser);
-
-passport.deserializeUser(deserialiseSessionUser);
+const app = initiateApp();
 
 app.use((req, res) => {
 
