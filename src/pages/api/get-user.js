@@ -8,7 +8,10 @@ app.use((req, res) => {
 
     res.setHeader('Content-Type', 'application/json');
 
-    res.status(200).json({status: isLoggedIn});
+    res.status(200).json({
+        status: isLoggedIn,
+        user: req.user
+    });
 
   });
 
