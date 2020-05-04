@@ -2,7 +2,7 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <h3 align="center">NextJS Passport Authentication</h3>
+  <h1 align="center">NextJS Passport Authentication</h1>
 
   <p align="center">
     NextJS passportJS authentication setup without using custom server and with custom designed middleware for NextJS API routes.
