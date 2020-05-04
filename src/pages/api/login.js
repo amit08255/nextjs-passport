@@ -15,9 +15,6 @@ const startUserSession = (req, res, user) => {
 
 export const onUserAuthentication = (req, res) => (error, session, info) => {
 
-  console.log("\n\ncookies: ", req);
-  console.log("\n\n\ncookie res: ", res);
-    
     if (error) {
       return res.status(401).send(error);
     }

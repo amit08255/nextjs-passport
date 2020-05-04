@@ -10,8 +10,11 @@ const indexPage = () => {
 
 export const getServerSideProps = async function({ req, res }) {
 
+    const PORT = process.env.PORT || 3000;
+    const baseURL = `http://localhost:${PORT}`;
+
     // Fetch data from external API
-    const response = await axios.post(`http://localhost:3000/api/verify-session`, {}, {
+    const response = await axios.post(`${baseURL}/api/verify-session`, {}, {
         headers: {
             Cookie: req.headers.cookie || ""
         }
